@@ -19,6 +19,6 @@ getLocationFunction location = case location of
   "reno" -> renoOffice
   _ -> (\name -> (fst name) ++ " " ++ (snd name))
 
-addressLetter name location = locationFunction name
+addressLetter location name = locationFunction name
   where locationFunction = getLocationFunction location
 -- addressLetter ("Kylian", "Mbappe") "ny" // => "Kylian Mbappe: PO Box 789 - New York, NY, 10013"
