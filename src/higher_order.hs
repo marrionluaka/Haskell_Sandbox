@@ -21,4 +21,3 @@ getLocationFunction location = case location of
 
 addressLetter location name = locationFunction name
   where locationFunction = getLocationFunction location
--- addressLetter ("Kylian", "Mbappe") "ny" // => "Kylian Mbappe: PO Box 789 - New York, NY, 10013"
