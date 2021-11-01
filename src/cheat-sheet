@@ -1,0 +1,2 @@
+- :cd dir (to load dir)
+- :l file.hs (to load file)
