@@ -67,7 +67,7 @@ instance Show PTable where
 
 
 --------------
--- cartesian product
+-- Cartesian product: the combination of all events and probabilities
 cartCombine :: (a -> b -> c) -> [a] -> [b] -> [c]
 cartCombine func l1 l2 = zipWith func newL1 cycledL2
   where nToAdd = length l2
@@ -83,9 +83,9 @@ combineProbs :: Probs -> Probs -> Probs
 combineProbs = cartCombine (*)
 
 instance Semigroup PTable where
-  (<>) ptable1 (PTable [] []) = ptable1
-  (<>) (PTable [] []) ptable2 = ptable2
-  (<>) (PTable e1 p1) (PTable e2 p2) = createPTable newEvents newProbs
+  (<>) ptable1 (PTable [] []) = ptable1 -- mappend mempty x returns x
+  (<>) (PTable [] []) ptable2 = ptable2 -- mappend x mempty returns x
+  (<>) (PTable e1 p1) (PTable e2 p2) = createPTable newEvents newProbs -- associativity
     where newEvents = combineEvents e1 e2
           newProbs = combineProbs p1 p2
 
