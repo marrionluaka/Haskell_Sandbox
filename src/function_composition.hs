@@ -103,3 +103,8 @@ spinner = createPTable ["red", "blue", "green"] [0.1, 0.2, 0.7]
 
 -- coin <> spinner
 -- mconcat [coin, coin, coin]
+
+
+-- Extra notes:
+--  - Monoid and Semigroup allow you to combine two instances of a type into a new instance.
+--  - The only difference between Monoid and Semigroup is that Monoid requires you to specify an identity element.
