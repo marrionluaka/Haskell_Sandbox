@@ -13,3 +13,7 @@ organPairs = zip ids organs
 
 organCatalog :: Map.Map Int Organ
 organCatalog = Map.fromList organPairs
+
+-- Usage
+-- GHCi> Map.lookup 7 organCatalog
+-- Just Heart
