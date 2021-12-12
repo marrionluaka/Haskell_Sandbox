@@ -54,3 +54,41 @@ organList = map showOrgan justTheOrgan
 
 cleanList :: String
 cleanList = intercalate "," organList
+
+
+
+--------------
+data Location = Lab | Kitchen | Bathroom deriving Show
+data Container = Vat Organ | Cooler Organ | Bag Organ
+
+instance Show Container where
+  show (Vat organ) = show organ ++ " in a vat"
+  show (Cooler organ) = show organ ++ " in a cooler"
+  show (Bag organ) = show organ ++ " in a bag"
+
+processRequest :: Int -> Map.Map Int Organ -> String
+processRequest id catalog = processAndReport organ
+  where organ = Map.lookup id catalog
+
+-- Separate the parts of the code for which you need to worry about a problem
+-- (processAndReport needs to worry about missing values) from the ones that don't
+-- (report doesn't need to worry a thing).
+processAndReport :: Maybe Organ -> String
+processAndReport (Just organ) = report (process organ)
+processAndReport Nothing = "error, id not found"
+
+report :: (Location, Container) -> String
+report (location, container) = show container ++ " in the " ++ show location
+
+process :: Organ -> (Location, Container)
+process organ = placeInLocation (organToContainer organ)
+
+placeInLocation :: Container -> (Location, Container)
+placeInLocation (Vat a) = (Lab, Vat a)
+placeInLocation (Cooler a) = (Lab, Cooler a)
+placeInLocation (Bag a) = (Kitchen, Bag a)
+
+organToContainer :: Organ -> Container
+organToContainer Brain = Vat Brain
+organToContainer Heart = Cooler Heart
+organToContainer organ = Bag organ
