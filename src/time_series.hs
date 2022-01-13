@@ -26,15 +26,27 @@ file4 = [(26, 219.8), (27, 220.5), (28, 223.8),
 
 data TS a = TS [Int] [Maybe a]
 
+ts1 :: TS Double
+ts1 = fileToTS file1
+
+ts2 :: TS Double
+ts2 = fileToTS file2
+
+ts3 :: TS Double
+ts3 = fileToTS file3
+
+ts4 :: TS Double
+ts4 = fileToTS file4
+
+fileToTS :: [(Int, a)] -> TS a
+fileToTS tvPairs = createTS times values
+  where (times, values) = unzip tvPairs
+
 createTS :: [Int] -> [a] -> TS a
 createTS times values   = TS completeTimes extendedValues
   where completeTimes   = [minimum times .. maximum times]
         timeValueMap    = Map.fromList (zip times values)
         extendedValues  = map (`Map.lookup` timeValueMap) completeTimes
-
-fileToTS :: [(Int, a)] -> TS a
-fileToTS tvPairs = createTS times values
-  where (times, values) = unzip tvPairs
 
 showTVPair :: Show a => Int -> Maybe a -> String
 showTVPair time (Just value) = mconcat [show time, "|", show value, "\n"]
@@ -43,3 +55,24 @@ showTVPair time Nothing = mconcat [show time, "|NA\n"]
 instance Show a => Show (TS a) where
   show (TS times values) = mconcat rows
     where rows = zipWith showTVPair times values
+
+combineTS :: TS a -> TS a -> TS a
+combineTS (TS [] []) ts2 = ts2
+combineTS ts1 (TS [] []) = ts1
+combineTS (TS t1 v1) (TS t2 v2) = TS completeTimes combinedValues
+  where bothTimes = mconcat[t1, t2]
+        completeTimes = [minimum bothTimes .. maximum bothTimes]
+        tvMap = foldl insertMaybePair Map.empty (zip t1 v1) -- insert all values from ts1 into Map.empty
+        updatedMap = foldl insertMaybePair tvMap (zip t2 v2) -- insert all values from ts2 into tvMap (overwrites duplicates)
+        combinedValues = map (`Map.lookup` updatedMap) completeTimes
+
+insertMaybePair :: Ord k => Map.Map k v -> (k, Maybe v) -> Map.Map k v
+insertMaybePair myMap (_, Nothing) = myMap
+insertMaybePair myMap (key, Just value) = Map.insert key value myMap
+
+instance Semigroup (TS a) where
+  (<>) = combineTS
+
+
+-- Usage
+-- ts1 <> ts2
