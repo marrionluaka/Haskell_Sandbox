@@ -76,3 +76,15 @@ instance Semigroup (TS a) where
 
 -- Usage
 -- ts1 <> ts2
+
+
+instance Monoid (TS a) where
+  mempty = TS [] []
+  mappend = (<>)
+
+tsAll :: TS Double
+tsAll = mconcat [ts1, ts2, ts3, ts4]
+
+
+-- Usage
+-- mconcat [ts1, ts2]
