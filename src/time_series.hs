@@ -160,6 +160,13 @@ diffPair (Just x) (Just y) = Just (x - y)
 
 
 --------------
+movingAverageTS :: (Real a) => TS a -> Int -> TS Double
+movingAverageTS (TS [] []) n = TS [] []
+movingAverageTS (TS times values) n = TS times smoothedValues
+  where ma = movingAvg values n
+        nothings = replicate (n `div` 2) Nothing
+        smoothedValues = mconcat [nothings, ma, nothings]
+
 movingAvg :: (Real a) => [Maybe a] -> Int -> [Maybe Double]
 movingAvg [] n = []
 movingAvg vals n = if length nextVals == n
@@ -173,10 +180,3 @@ meanMaybe vals = if any (== Nothing) vals
                  then Nothing
                  else Just avg
   where avg = mean (map fromJust vals)
-
-movingAverageTS :: (Real a) => TS a -> Int -> TS Double
-movingAverageTS (TS [] []) n = TS [] []
-movingAverageTS (TS times values) n = TS times smoothedValues
-  where ma = movingAvg values n
-        nothings = replicate (n `div` 2) Nothing
-        smoothedValues = mconcat [nothings, ma, nothings]
