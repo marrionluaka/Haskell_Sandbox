@@ -142,3 +142,41 @@ maxTS = compareTS max
 -- Just (4, Just 198.9)
 -- ghci> maxTS tsAll
 -- Just (12, Just 202.9)
+
+
+
+--------------
+diffTS :: Num a => TS a -> TS a
+diffTS (TS [] []) = TS [] []
+diffTS (TS times values) = TS times (Nothing:diffValues)
+  where shiftValues = tail values
+        diffValues = zipWith diffPair shiftValues values
+
+diffPair :: Num a => Maybe a -> Maybe a -> Maybe a
+diffPair Nothing _ = Nothing
+diffPair _ Nothing = Nothing
+diffPair (Just x) (Just y) = Just (x - y)
+
+
+
+--------------
+movingAvg :: (Real a) => [Maybe a] -> Int -> [Maybe Double]
+movingAvg [] n = []
+movingAvg vals n = if length nextVals == n
+                   then meanMaybe nextVals:movingAvg restVals n
+                   else []
+  where nextVals = take n vals
+        restVals = tail vals
+
+meanMaybe :: (Real a) => [Maybe a] -> Maybe Double
+meanMaybe vals = if any (== Nothing) vals
+                 then Nothing
+                 else Just avg
+  where avg = mean (map fromJust vals)
+
+movingAverageTS :: (Real a) => TS a -> Int -> TS Double
+movingAverageTS (TS [] []) n = TS [] []
+movingAverageTS (TS times values) n = TS times smoothedValues
+  where ma = movingAvg values n
+        nothings = replicate (n `div` 2) Nothing
+        smoothedValues = mconcat [nothings, ma, nothings]
