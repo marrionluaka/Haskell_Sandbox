@@ -1,3 +1,12 @@
+-- `++` concatenates one list to another. With `:` the first argument is of type a (an arbitrary type)
+-- and the second argument is of type [a] which is the type of lists of elements of a.
+-- If you're ever confused about a type just check the `ghci>` with `:t`
+-- Example:
+-- ghci> :t (++)
+-- (++) :: [a] -> [a] -> [a]
+-- ghci> :t (:)
+-- (:) :: a -> [a] -> [a]
+
 myMap f [] = []
 myMap f (x:xs) = (f x):myMap f xs
 -- myMap (^2) [1,2,3] => [1,4,9]
