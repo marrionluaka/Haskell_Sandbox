@@ -1,5 +1,5 @@
 -- `++` concatenates one list to another. With `:` the first argument is of type a (an arbitrary type)
--- and the second argument is of type [a] which is the type of lists of elements of a.
+-- and the second argument is of type [a] which is the type of lists of elements of a. It's essentially R.prepend
 -- If you're ever confused about a type just check the `ghci>` with `:t`
 -- Example:
 -- ghci> :t (++)
