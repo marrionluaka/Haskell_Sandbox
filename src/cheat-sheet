@@ -1,2 +1,3 @@
 - :cd dir (to load dir)
 - :l file.hs (to load file)
+- adding packages: https://docs.haskellstack.org/en/stable/GUIDE/#adding-dependencies
