@@ -9,3 +9,10 @@ combinedTextMonoid = mconcat ["some", " ", "text"]
 
 combinedTextSemigroup :: T.Text
 combinedTextSemigroup = "some" <> " " <> "text"
+
+
+myLines:: T.Text -> [T.Text]
+myLines = T.splitOn "\n"
+
+myUnlines :: [T.Text] -> T.Text
+myUnlines = T.intercalate "\n"
