@@ -1,4 +1,6 @@
 - :cd dir (to load dir)
 - :l file.hs (to load file)
 - :main
+- :t <func, type, ect...>
+- :info <type>
 - adding packages: https://docs.haskellstack.org/en/stable/GUIDE/#adding-dependencies
