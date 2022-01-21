@@ -32,6 +32,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , bytestring
     , containers
     , text
   default-language: Haskell2010
@@ -45,6 +46,7 @@ executable my-proj-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
     , containers
     , my-proj
     , text
@@ -60,6 +62,7 @@ test-suite my-proj-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
     , containers
     , my-proj
     , text
