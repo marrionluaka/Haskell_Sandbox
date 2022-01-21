@@ -34,6 +34,7 @@ library
       base >=4.7 && <5
     , bytestring
     , containers
+    , random
     , text
   default-language: Haskell2010
 
@@ -49,6 +50,7 @@ executable my-proj-exe
     , bytestring
     , containers
     , my-proj
+    , random
     , text
   default-language: Haskell2010
 
@@ -65,5 +67,6 @@ test-suite my-proj-test
     , bytestring
     , containers
     , my-proj
+    , random
     , text
   default-language: Haskell2010
