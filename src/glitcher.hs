@@ -2,6 +2,7 @@ import System.Random
 import System.Environment
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Char8 as BC
+import Control.Monad (foldM)
 
 main :: IO ()
 main = do
@@ -9,11 +10,19 @@ main = do
   let fileName = head args
   imageFile <- BC.readFile fileName
 
-  glitched <- randomSortSection imageFile
+  glitched <- foldM (\bytes func -> func bytes) imageFile glitchActions
   let glitchedFileName = mconcat ["glitched_", fileName]
   BC.writeFile glitchedFileName glitched
   print "all done"
 
+
+glitchActions :: [BC.ByteString -> IO BC.ByteString]
+glitchActions = [randomReplaceByte
+  , randomSortSection
+  , randomReplaceByte
+  , randomSortSection
+  , randomReplaceByte
+  ]
 
 randomSortSection :: BC.ByteString -> IO BC.ByteString
 randomSortSection bytes = do
