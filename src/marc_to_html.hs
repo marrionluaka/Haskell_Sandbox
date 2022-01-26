@@ -145,6 +145,7 @@ getFieldMetadata :: [MarcDirectoryEntryRaw] -> [FieldMetadata]
 getFieldMetadata = map makeFieldMetadata
 
 -- Whenever you're working with lists, start with transforming a single item into the desired output
+-- That way you can then easily map over it later
 makeFieldMetadata :: MarcDirectoryEntryRaw -> FieldMetadata
 makeFieldMetadata entry = FieldMetadata textTag theLength theStart
   where (theTag, rest) = B.splitAt 3 entry
