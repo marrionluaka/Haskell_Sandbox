@@ -56,3 +56,18 @@ partVal = Map.lookup 1 partsDB
 
 partHtml :: Maybe Html
 partHtml = renderHtml <$> partVal
+
+allParts :: [RobotPart]
+allParts = snd <$> Map.toList partsDB
+
+allPartsHtml :: [Html]
+allPartsHtml = renderHtml <$> allParts -- equiv to: map renderHtml allParts
+
+htmlPartsDB :: Map.Map Int Html
+htmlPartsDB = renderHtml <$> partsDB
+
+leftArmIO :: IO RobotPart
+leftArmIO = return leftArm
+
+htmlSnippet :: IO Html
+htmlSnippet = renderHtml <$> leftArmIO
