@@ -2,7 +2,6 @@ import qualified Data.Map as Map
 
 type LatLong = (Double, Double)
 
-
 printDistance :: Maybe Double -> IO ()
 printDistance Nothing = putStrLn "Error, invalid city entered"
 printDistance (Just distance) = putStrLn (show distance ++ " miles")
