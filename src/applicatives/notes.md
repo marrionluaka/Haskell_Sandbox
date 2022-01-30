@@ -42,6 +42,7 @@
 4) Finally, you get your result in the same applicative context you started with. In this case, a `Maybe Double`.
 
 - Applicative's `<*>` allows you to *apply* a function in a context:
+
   ```haskell
     GHCi> :t maybeInc
     maybeInc :: Num a => Maybe (a -> a)
