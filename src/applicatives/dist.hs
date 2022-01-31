@@ -2,6 +2,22 @@ import qualified Data.Map as Map
 
 type LatLong = (Double, Double)
 
+main :: IO ()
+main = do
+  putStrLn "Enter the stating city name:"
+
+  startingInput <- getLine
+  let startingCity = Map.lookup startingInput locationDB
+
+  putStrLn "Enter the destination city name:"
+
+  destInput <- getLine
+  let destCity = Map.lookup destInput locationDB
+
+  let distance = haversine <$> startingCity <*> destCity
+  printDistance distance
+
+
 printDistance :: Maybe Double -> IO ()
 printDistance Nothing = putStrLn "Error, invalid city entered"
 printDistance (Just distance) = putStrLn (show distance ++ " miles")

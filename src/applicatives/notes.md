@@ -53,3 +53,22 @@
     GHCi> maybeInc <*> Nothing
     Nothing
   ```
+
+- Using existing binary functions in a `Maybe` context (chaining):
+
+  ```haskell
+    GHCi> (++) <$> Just "cats" <*> Just " and dogs"
+    Just "cats and dogs"
+
+    GHCi> (++) <$> Nothing <*> Just " and dogs"
+    Nothing
+  ```
+
+- Combining `<$>` with `<*>` to compute haverstine in a `Maybe` context:
+  ```haskell
+    --[1]    --[2]                  --[3]
+    haversine <$> startingCity <*> destcity
+    ```
+  1) The first part uses partial application which leaves you with a function of type `Maybe (LatLong -> Double)` waiting for a missing argument.
+  2) The `<*>` operator **takes a function in a context**, in this case `Maybe (LatLong -> Double)`.
+  3) And an argument in the same context `Maybe LatLong` **and applies the function to that argument**, returning a type still in the context, here a `Maybe Double`.
