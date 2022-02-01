@@ -2,6 +2,8 @@
 
 - To calc a distance between two points on a globe, you use the Haversine formula.
 - Reason backward from where you want to end up
+- The `Applicative`'s `<*>` allows you to use functions that are themselves in a context.
+- It allows us to extend `Functor` to use multi-argument functions.
 
 # Functor reminder
 
@@ -72,3 +74,31 @@
   1) The first part uses partial application which leaves you with a function of type `Maybe (LatLong -> Double)` waiting for a missing argument.
   2) The `<*>` operator **takes a function in a context**, in this case `Maybe (LatLong -> Double)`.
   3) And an argument in the same context `Maybe LatLong` **and applies the function to that argument**, returning a type still in the context, here a `Maybe Double`.
+
+# Using <*> to create data in a context
+
+- One of the most common uses of `Applicatives` in practice occurs when you want to create data, but all the information you need for that data is in a context such as a `Maybe` or `IO`.
+
+### Creating a user in the context of a Maybe
+
+- Remember that data constructors can work as functions:
+  ```haskell
+    data User = User
+    { name :: String
+    , gamerId :: Int
+    , score :: Int
+    } deriving Show
+
+    serverUserName :: Maybe String
+    serverUserName = Just "Sue"
+
+    serverGamerId :: Maybe Int
+    serverGamerId = Just 1337
+
+    serverScore :: Maybe Int
+    serverScore = Just 9001
+
+    GHCi> User <$> serverUserName <*> serverGamerId <*> serverScore
+    Just (User {name = "Sue", gamerId = 1337, score = 9001 })
+  ```
+- In this case, `User` is a function that expects three arguments
