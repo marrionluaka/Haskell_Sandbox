@@ -131,6 +131,8 @@
   - Parameterized types that represent a container are types that represent a data structure.
   - When a type is a context, extra information is implied about the type, beyond its structure.
 
+- Why is it important to understand the differences between a Container and a Context?
+
 - How does one know when a type is a container?
   - The best test of whether a type is a container is whether you can tell what it does, independent of its name.
   - For example you can tell that `Blah` is a tuple despite not paying attention to its awful name:
@@ -140,3 +142,9 @@
   - The meaning of the type is implied by the data structure itself
 
 - The 2-tuple `(,)` and `Data.Map` are both instances of `Functor` but *not* instances of `Applicative`.
+
+# List as a context
+
+- The `List` type is both a container *and* a context.
+
+- The `List` type is a member of `Applicative`
