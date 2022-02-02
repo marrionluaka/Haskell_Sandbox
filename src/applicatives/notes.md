@@ -102,3 +102,41 @@
     Just (User {name = "Sue", gamerId = 1337, score = 9001 })
   ```
 - In this case, `User` is a function that expects three arguments
+
+# Applicative Type Class
+
+- Functor is the superclass of applicative.
+
+- Type class definition for Applicative:
+  ```haskell
+    class Functor f => Applicative f where
+      (<*>) :: f (a -> b) -> f a -> f b
+      pure :: a -> f a
+  ```
+- The type constraint on the type variable f means that Functor is a superclass of Applicative. So all Applicatives are also Functors.
+- The `pure` function takes an ordinary value or function and returns the same value wrapped in a context.
+  ```haskell
+    -- For values
+    GHCi> pure 7 :: Maybe Int
+    Just 7
+
+    -- For functions
+    GHCi> pure (6+) <*> Just 5
+    Just 11
+  ```
+
+# Containers vs context
+
+- What's the difference between a Container vs a Context?
+  - Parameterized types that represent a container are types that represent a data structure.
+  - When a type is a context, extra information is implied about the type, beyond its structure.
+
+- How does one know when a type is a container?
+  - The best test of whether a type is a container is whether you can tell what it does, independent of its name.
+  - For example you can tell that `Blah` is a tuple despite not paying attention to its awful name:
+    ```haskell
+      data Blah a b = Blah a b
+    ```
+  - The meaning of the type is implied by the data structure itself
+
+- The 2-tuple `(,)` and `Data.Map` are both instances of `Functor` but *not* instances of `Applicative`.
