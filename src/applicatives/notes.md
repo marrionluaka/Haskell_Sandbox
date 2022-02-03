@@ -148,3 +148,40 @@
 - The `List` type is both a container *and* a context.
 
 - The `List` type is a member of `Applicative`
+
+- `List` as a context describes *nondeterministic* computation.
+
+- Deterministic: Each step in the computation is followed by another in a precise order that yields one, final result. Essentially, following a single path to a single answer. Example:
+  ```haskell
+    doorPrize :: [Int]
+    doorPrize = [1000, 2000, 3000]
+
+    boxPrize :: [Int]
+    boxPrize = [500, 20000]
+
+    totalPrizeD :: Int
+    totalPrizeD = (+) doorPrize boxPrize
+
+    GHCi> totalPrize
+    [1500, 21000, 2500, 22000, 3500, 23000]
+  ```
+
+- Nondeterministic: Compute multiple possibilities all at once. Example:
+  ```haskell
+    totalPrizeN :: [Int]
+    totalPrizeD = pure (+) <*> doorPrize <*> boxPrize
+
+    GHCi> totalPrizeD
+    [1500,21000,2500,22000,3500,23000]
+  ```
+
+### Container vs Context with a list
+
+- What are the major differences between a list as container and a list as context?
+  - As a container: sequence of values that can hold any type.
+  - As a context: a set of possibilities. It acts like a single variable that can contain many possible values.
+
+### Generating the first N prime numbers
+
+- A *prime number* is any number divisible by only 1 and itself.
+- A *composite number* is any number that results from multiplying two or more other numbers together.
