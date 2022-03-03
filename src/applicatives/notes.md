@@ -33,6 +33,7 @@
 # Enter the <*> operator
 
 - `<*>` operator is pronounced *app*
+- It enables you to use partial application in a context.
 
 ```haskell
                          --[1] --[2]    --[3]  --[4]

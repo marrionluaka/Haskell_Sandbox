@@ -1,6 +1,6 @@
 ## General
 
-- The `Functor` type class allows you to apply an ordinary function to values inside a container(for example, `List`) or context(for example, `IO` or `Maybe`)
+- The `Functor` type class allows you to apply an ordinary function to values inside a container(for example, `List`) or context(for example, `IO` or `Maybe`). In other words, it allows you to change individual values in a context.
 
 - If you have a function `Int -> Double` and a value `Maybe Int`, you can use `Functor`'s `fmap` to apply the `Int -> Double` function to the `Maybe Int` value, resulting in a Maybe Double value.
 
