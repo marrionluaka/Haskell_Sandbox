@@ -35,3 +35,34 @@
   -- 4
   ```
 
+- You use `>>=` to chain together functions of the type `(a -> m b)`
+
+# Monad type class
+- In the same way the `Applicative` type class extends the power of `Functor`, the `Monad` type class extends the power of `Applicative`:
+  ```haskell
+    -- Functor
+    fmap  :: Functor f :: (a -> b) -> f a -> f b
+    (<$>) :: Functor f :: (a -> b) -> f a -> f b
+    |
+    |
+    -- Applicative extends Functor
+    fmap  :: Functor f :: (a -> b) -> f a -> f b
+    (<$>) :: Functor f :: (a -> b) -> f a -> f b
+    (<*>) :: Applicative f :: f (a -> b) -> f a -> f b
+    pure  :: Applicative f :: a -> f a
+    |
+    |
+    -- Monad extends Applicative
+    fmap  :: Functor f :: (a -> b) -> f a -> f b
+    (<$>) :: Functor f :: (a -> b) -> f a -> f b
+    (<*>) :: Applicative f :: f (a -> b) -> f a -> f b
+    pure  :: Applicative f :: a -> f a
+    (>>=) :: Monad m :: m a -> (a -> m b) -> m b
+    (>>)  :: Monad m :: m a -> m b -> m b
+    return :: Monad m :: a -> m a
+    fail  :: Monad m :: String -> m a
+  ```
+- The only method required for the minimum definition of Monad is `>>=`
+- `pure` and `return` are the same except that `pure` has a class restraint on `Applicative` (they have different names for historical reasons).
+
+- `>>` throws away the first argument it receives, it's useful in contexts that produce side effects such as `IO`
